@@ -3,7 +3,10 @@ import Booking from '../models/Booking.js'
 
 export const getAllShows = async (req, res) => {
   try {
-    const shows = await Show.find().populate('movie').populate('hall')
+    const now = new Date()
+    const shows = await Show.find({ finished: { $ne: true }, date: { $gt: now } })
+      .populate('movie')
+      .populate('hall')
     res.json(shows)
   } catch (err) {
     res.status(500).json({ msg: err.message })
@@ -13,7 +16,8 @@ export const getAllShows = async (req, res) => {
 export const getShowById = async (req, res) => {
   try {
     const show = await Show.findById(req.params.id).populate('movie').populate('hall')
-    if (!show) return res.status(404).json({ msg: 'Nie znaleziono seansu' })
+    if (!show || show.finished || new Date(show.date) <= new Date())
+      return res.status(404).json({ msg: 'Nie znaleziono seansu' })
     const bookings = await Booking.find({ show: show._id })
     const bookedSeats = bookings.flatMap(b => b.seats).map(s => `${s.row}-${s.number}`)
     res.json({ ...show.toObject(), bookedSeats })

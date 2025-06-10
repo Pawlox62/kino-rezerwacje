@@ -12,6 +12,7 @@ const showSchema = new mongoose.Schema(
       required: true,
     },
     date: { type: Date, required: true },
+    finished: { type: Boolean, default: false },
     basePrice: { type: Number, required: true, default: 28.9 },
     format: {
       type: String,
