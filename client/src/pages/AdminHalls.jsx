@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import api from '../api/axios'
+import BackButton from '../components/BackButton'
 
 export default function AdminHalls() {
   const { hallId } = useParams()
@@ -150,9 +151,10 @@ export default function AdminHalls() {
           ))}
         </div>
       ))}
-      <button className="btn btn-success mt-3" onClick={handleSubmit}>
+      <button className="btn btn-success mt-3 me-2" onClick={handleSubmit}>
         Zapisz
       </button>
+      <BackButton label="Anuluj" />
     </div>
   )
 }
