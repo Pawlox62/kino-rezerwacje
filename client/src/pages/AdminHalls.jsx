@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import api from '../api/axios'
+import BackButton from '../components/BackButton'
 
 export default function AdminHalls() {
   const { hallId } = useParams()
@@ -74,7 +75,10 @@ export default function AdminHalls() {
 
   return (
     <div className="container mt-4">
-      <h2>{isEdit ? 'Edytuj salę' : 'Dodaj salę'}</h2>
+      <div className="d-flex justify-content-between align-items-center">
+        <h2>{isEdit ? 'Edytuj salę' : 'Dodaj salę'}</h2>
+        <BackButton label="Anuluj" />
+      </div>
       {error && <div className="alert alert-danger">{error}</div>}
       {!isEdit && (
         <div className="row mb-3">
