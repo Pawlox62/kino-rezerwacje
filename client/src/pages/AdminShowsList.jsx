@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../api/axios'
+import BackButton from '../components/BackButton'
 
 export default function AdminShowsList() {
   const [shows, setShows] = useState([])
@@ -18,7 +19,10 @@ export default function AdminShowsList() {
 
   return (
     <div className="container mt-4">
-      <h2>Lista seansów</h2>
+      <div className="d-flex justify-content-between align-items-center">
+        <h2>Lista seansów</h2>
+        <BackButton />
+      </div>
       <Link to="/admin/shows/new" className="btn btn-primary mb-3">Dodaj seans</Link>
       <table className="table">
         <thead>

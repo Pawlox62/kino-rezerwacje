@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import api from "../api/axios";
 
 export default function Movies() {
@@ -14,7 +15,10 @@ export default function Movies() {
 
   return (
     <div>
-      <h3>Repertuar</h3>
+      <div className="d-flex justify-content-between align-items-center">
+        <h3>Repertuar</h3>
+        <BackButton />
+      </div>
       <div className="row">
         {movies.map((m) => (
           <div key={m._id} className="col-md-4 mb-3">

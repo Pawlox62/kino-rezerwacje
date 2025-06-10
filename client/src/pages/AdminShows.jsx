@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
+import BackButton from "../components/BackButton";
 
 export default function AdminShows() {
   const { showId } = useParams();
@@ -68,7 +69,10 @@ export default function AdminShows() {
 
   return (
     <div className="container mt-4">
-      <h2>{isEdit ? "Edytuj seans" : "Dodaj seans"}</h2>
+      <div className="d-flex justify-content-between align-items-center">
+        <h2>{isEdit ? "Edytuj seans" : "Dodaj seans"}</h2>
+        <BackButton label="Anuluj" />
+      </div>
       {msg && <div className="alert alert-info">{msg}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
