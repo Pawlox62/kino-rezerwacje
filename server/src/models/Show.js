@@ -26,6 +26,7 @@ const showSchema = new mongoose.Schema(
       required: true,
       default: "napisy",
     },
+    occurred: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

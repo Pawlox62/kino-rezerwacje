@@ -14,6 +14,7 @@ export default function AdminShows() {
   const [basePrice, setBasePrice] = useState("");
   const [format, setFormat] = useState("2d");
   const [language, setLanguage] = useState("napisy");
+  const [occurred, setOccurred] = useState(false);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
@@ -32,6 +33,7 @@ export default function AdminShows() {
           setBasePrice(data.basePrice.toString());
           setFormat(data.format);
           setLanguage(data.language);
+          setOccurred(Boolean(data.occurred));
         })
         .catch(() => navigate("/admin/shows"));
     }
@@ -48,6 +50,7 @@ export default function AdminShows() {
       basePrice: basePrice ? parseFloat(basePrice) : undefined,
       format,
       language,
+      occurred,
     };
     try {
       if (isEdit) {
@@ -154,6 +157,20 @@ export default function AdminShows() {
             <option value="dubbing">dubbing</option>
           </select>
         </div>
+        {isEdit && (
+          <div className="form-check mb-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="occurred"
+              checked={occurred}
+              onChange={(e) => setOccurred(e.target.checked)}
+            />
+            <label className="form-check-label" htmlFor="occurred">
+              Seans odbył się
+            </label>
+          </div>
+        )}
         <button type="submit" className="btn btn-primary">
           {isEdit ? "Zapisz zmiany" : "Utwórz seans"}
         </button>

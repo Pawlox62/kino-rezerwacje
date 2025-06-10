@@ -27,6 +27,7 @@ export default function AdminShowsList() {
             <th>Data i godzina</th>
             <th>Format</th>
             <th>Język</th>
+            <th>Odbyty</th>
             <th>Akcje</th>
           </tr>
         </thead>
@@ -40,6 +41,7 @@ export default function AdminShowsList() {
               </td>
               <td>{show.format.toUpperCase()}</td>
               <td>{show.language === 'napisy' ? 'Napisy' : 'Dubbing'}</td>
+              <td>{show.occurred ? 'tak' : 'nie'}</td>
               <td>
                 <Link to={`/admin/shows/edit/${show._id}`} className="btn btn-sm btn-warning me-2">Edytuj</Link>
                 <button onClick={() => handleDelete(show._id)} className="btn btn-sm btn-danger">Usuń</button>
