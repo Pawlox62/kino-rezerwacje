@@ -27,30 +27,51 @@ app.use("/api/admin", adminRoutes);
 
 const httpServer = createServer(app);
 const io = new IOServer(httpServer, { cors: { origin: "*" } });
+// locks structure: { [showId]: { [seatId]: socketId } }
 const locks = {};
+
+function releaseSeats(socket, showId) {
+  const map = locks[showId];
+  if (!map) return;
+  for (const [sid, owner] of Object.entries(map)) {
+    if (owner === socket.id) {
+      delete map[sid];
+      socket.to(showId).emit("seatUnlocked", sid);
+    }
+  }
+  if (Object.keys(map).length === 0) delete locks[showId];
+}
 
 io.on("connection", (socket) => {
   socket.on("joinShow", (showId) => {
     socket.join(showId);
-    const set = locks[showId] || new Set();
-    socket.emit("seatLockedInit", Array.from(set));
+    const map = locks[showId] || {};
+    socket.emit("seatLockedInit", Object.keys(map));
     socket.showId = showId;
   });
 
   socket.on("leaveShow", (showId) => {
+    releaseSeats(socket, showId);
     socket.leave(showId);
+    if (socket.showId === showId) socket.showId = null;
   });
 
   socket.on("lockSeat", ({ showId, sid }) => {
-    locks[showId] = locks[showId] || new Set();
-    locks[showId].add(sid);
+    locks[showId] = locks[showId] || {};
+    locks[showId][sid] = socket.id;
     socket.to(showId).emit("seatLocked", sid); // emit to others only
   });
 
   socket.on("unlockSeat", ({ showId, sid }) => {
-    if (locks[showId]) {
-      locks[showId].delete(sid);
+    if (locks[showId] && locks[showId][sid] === socket.id) {
+      delete locks[showId][sid];
       socket.to(showId).emit("seatUnlocked", sid); // emit to others only
+    }
+  });
+
+  socket.on("disconnect", () => {
+    if (socket.showId) {
+      releaseSeats(socket, socket.showId);
     }
   });
 });
