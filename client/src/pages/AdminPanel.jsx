@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
-import BackButton from "../components/BackButton";
 
 export default function AdminPanel() {
   const [stats, setStats] = useState([]);
