@@ -14,8 +14,14 @@ export default async function cleanupExpiredBookings() {
     for (const show of shows) {
       const start = new Date(show.date)
       if (start < now && !show.finished) finishedIds.add(show._id)
-      const end = start.getTime() + show.movie.duration * 60000
-      if (end < now && !show.occurred) occurredIds.add(show._id)
+      const duration = show.movie?.duration
+      if (duration) {
+        const end = start.getTime() + duration * 60000
+        if (end < now && !show.occurred) occurredIds.add(show._id)
+      } else if (!show.occurred) {
+        // movie missing - mark occurred to skip future checks
+        occurredIds.add(show._id)
+      }
     }
 
     const finArr = Array.from(finishedIds)
