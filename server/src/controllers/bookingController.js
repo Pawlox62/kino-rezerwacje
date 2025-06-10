@@ -43,7 +43,12 @@ export const getUserBookings = async (req, res) => {
     });
     const now = new Date();
     const active = all.filter(
-      (b) => new Date(b.show.date) > now && !b.show.occurred
+      (b) =>
+        b.show &&
+        b.show.movie &&
+        b.show.hall &&
+        new Date(b.show.date) > now &&
+        !b.show.occurred
     );
     res.json(active);
   } catch (err) {
