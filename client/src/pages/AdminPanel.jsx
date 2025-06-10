@@ -15,7 +15,6 @@ export default function AdminPanel() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center">
         <h2>Statystyki sprzedaży</h2>
-        <BackButton />
       </div>
       <table className="table">
         <thead>

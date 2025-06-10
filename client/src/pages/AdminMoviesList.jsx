@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
-import BackButton from "../components/BackButton";
 
 export default function AdminMoviesList() {
   const [movies, setMovies] = useState([]);
@@ -22,7 +21,6 @@ export default function AdminMoviesList() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center">
         <h2>Lista filmów</h2>
-        <BackButton />
       </div>
       <Link to="/admin/movies/new" className="btn btn-primary mb-3">
         Dodaj film

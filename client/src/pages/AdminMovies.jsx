@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
-import BackButton from "../components/BackButton";
 
 export default function AdminMovies() {
   const { movieId } = useParams();
@@ -54,7 +53,6 @@ export default function AdminMovies() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center">
         <h2>{isEdit ? "Edytuj film" : "Dodaj film"}</h2>
-        <BackButton label="Anuluj" />
       </div>
       {msg && <div className="alert alert-info">{msg}</div>}
       <form onSubmit={handleSubmit}>
