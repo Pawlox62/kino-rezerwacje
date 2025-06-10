@@ -6,7 +6,8 @@ export const getOccupancyStats = async (req, res) => {
     const shows = await Show.find().populate("movie").populate("hall");
     const stats = await Promise.all(
       shows.map(async (show) => {
-        const layout = show.hall.layout;
+        if (!show.hall || !show.movie) return null;
+        const layout = show.hall.layout || [];
         const totalSeats = layout.reduce(
           (sum, row) => sum + row.seats.filter((s) => s.active).length,
           0
@@ -18,7 +19,7 @@ export const getOccupancyStats = async (req, res) => {
         bookings.forEach((b) => {
           b.seats.forEach(({ row }) => {
             const rowDef = layout.find((r) => r.row === row);
-            const type = rowDef.type;
+            const type = rowDef?.type || "standard";
             let price = base;
             if (type === "promo") price = base - 9;
             else if (type === "vip") price = base + 6;
@@ -36,7 +37,7 @@ export const getOccupancyStats = async (req, res) => {
         };
       })
     );
-    res.json(stats);
+    res.json(stats.filter(Boolean));
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
