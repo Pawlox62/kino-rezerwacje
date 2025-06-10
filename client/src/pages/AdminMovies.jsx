@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import api from "../api/axios";
 
 export default function AdminMovies() {
@@ -94,9 +95,10 @@ export default function AdminMovies() {
             placeholder="https://..."
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary me-2">
           {isEdit ? "Zapisz" : "Utwórz"}
         </button>
+        <BackButton label="Anuluj" />
       </form>
     </div>
   );

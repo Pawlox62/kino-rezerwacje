@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import BackButton from "../components/BackButton";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import api from "../api/axios";
@@ -60,10 +59,6 @@ export default function Login() {
             <Link to="/register" className="btn btn-link">
               Załóż konto
             </Link>
-          </div>
-          <div className="mt-3">
-            <BackButton label="Anuluj" />
-
           </div>
         </Form>
       )}
