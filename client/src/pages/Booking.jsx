@@ -31,6 +31,9 @@ export default function Booking() {
     socketRef.current = socket;
     socket.emit("joinShow", showId);
 
+    socket.on("seatLockedInit", (seats) => {
+      setLockedSeats(seats);
+    });
     socket.on("seatLocked", (sid) => {
       setLockedSeats((ls) => Array.from(new Set([...ls, sid])));
     });
