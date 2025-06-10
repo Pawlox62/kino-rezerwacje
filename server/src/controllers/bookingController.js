@@ -34,11 +34,13 @@ export const createBooking = async (req, res) => {
 export const getUserBookings = async (req, res) => {
   try {
     const userId = req.user.id;
-    const bookings = await Booking.find({ user: userId }).populate({
+    const all = await Booking.find({ user: userId }).populate({
       path: "show",
       populate: ["movie", "hall"],
     });
-    res.json(bookings);
+    const now = new Date();
+    const active = all.filter((b) => new Date(b.show.date) > now);
+    res.json(active);
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }

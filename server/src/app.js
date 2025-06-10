@@ -11,6 +11,7 @@ import hallRoomRoutes from "./routes/hallRooms.js";
 import showRoutes from "./routes/shows.js";
 import bookingRoutes from "./routes/booking.js";
 import adminRoutes from "./routes/admin.js";
+import cleanupExpiredBookings from "./utils/cleanup.js";
 
 dotenv.config();
 const app = express();
@@ -56,5 +57,7 @@ io.on("connection", (socket) => {
 
 app.set("io", io);
 mongoose.connect(process.env.MONGO_URI).then(() => {
+  cleanupExpiredBookings();
+  setInterval(cleanupExpiredBookings, 60 * 60 * 1000);
   httpServer.listen(process.env.PORT || 4000);
 });
