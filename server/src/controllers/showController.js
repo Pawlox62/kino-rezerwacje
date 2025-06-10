@@ -3,10 +3,10 @@ import Booking from '../models/Booking.js'
 
 export const getAllShows = async (req, res) => {
   try {
-    const now = new Date()
-    const shows = await Show.find({ finished: { $ne: true }, date: { $gt: now } })
+    const shows = await Show.find()
       .populate('movie')
       .populate('hall')
+      .sort({ date: 1 })
     res.json(shows)
   } catch (err) {
     res.status(500).json({ msg: err.message })

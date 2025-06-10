@@ -32,22 +32,25 @@ export default function AdminShowsList() {
           </tr>
         </thead>
         <tbody>
-          {shows.map(show => (
-            <tr key={show._id}>
-              <td>{show.movie.title}</td>
-              <td>
-                {new Date(show.date).toLocaleDateString('pl-PL')}{' '}
-                {new Date(show.date).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}
-              </td>
-              <td>{show.format.toUpperCase()}</td>
-              <td>{show.language === 'napisy' ? 'Napisy' : 'Dubbing'}</td>
-              <td>{show.occurred ? 'tak' : 'nie'}</td>
-              <td>
-                <Link to={`/admin/shows/edit/${show._id}`} className="btn btn-sm btn-warning me-2">Edytuj</Link>
-                <button onClick={() => handleDelete(show._id)} className="btn btn-sm btn-danger">Usuń</button>
-              </td>
-            </tr>
-          ))}
+          {shows.map(show => {
+            const past = new Date(show.date) < new Date()
+            return (
+              <tr key={show._id} className={past ? 'table-secondary' : ''}>
+                <td>{show.movie.title}</td>
+                <td>
+                  {new Date(show.date).toLocaleDateString('pl-PL')}{' '}
+                  {new Date(show.date).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}
+                </td>
+                <td>{show.format.toUpperCase()}</td>
+                <td>{show.language === 'napisy' ? 'Napisy' : 'Dubbing'}</td>
+                <td>{show.occurred ? 'tak' : 'nie'}</td>
+                <td>
+                  <Link to={`/admin/shows/edit/${show._id}`} className="btn btn-sm btn-warning me-2">Edytuj</Link>
+                  <button onClick={() => handleDelete(show._id)} className="btn btn-sm btn-danger">Usuń</button>
+                </td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
