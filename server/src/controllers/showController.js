@@ -6,7 +6,7 @@ export const getAllShows = async (req, res) => {
     const shows = await Show.find()
       .populate('movie')
       .populate('hall')
-      .sort({ date: 1 })
+      .sort({ occurred: 1, date: 1 })
     res.json(shows)
   } catch (err) {
     res.status(500).json({ msg: err.message })
