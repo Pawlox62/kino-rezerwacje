@@ -7,6 +7,9 @@ export const createBooking = async (req, res) => {
     const { showId, seats } = req.body;
     const show = await Show.findById(showId);
     if (!show) return res.status(404).json({ msg: "Seans nie istnieje" });
+    if (show.finished || new Date(show.date) <= new Date()) {
+      return res.status(400).json({ msg: "Seans już się odbył" });
+    }
     const existing = await Booking.find({ show: showId });
     const taken = new Set(
       existing.flatMap((b) => b.seats.map((s) => `${s.row}-${s.number}`))
