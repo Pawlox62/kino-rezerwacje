@@ -7,6 +7,9 @@ export const createBooking = async (req, res) => {
     const { showId, seats } = req.body;
     const show = await Show.findById(showId);
     if (!show) return res.status(404).json({ msg: "Seans nie istnieje" });
+    const now = new Date();
+    if (show.occurred || new Date(show.date) < now)
+      return res.status(400).json({ msg: "Seans już się odbył" });
     const existing = await Booking.find({ show: showId });
     const taken = new Set(
       existing.flatMap((b) => b.seats.map((s) => `${s.row}-${s.number}`))
@@ -39,7 +42,9 @@ export const getUserBookings = async (req, res) => {
       populate: ["movie", "hall"],
     });
     const now = new Date();
-    const active = all.filter((b) => new Date(b.show.date) > now);
+    const active = all.filter(
+      (b) => new Date(b.show.date) > now && !b.show.occurred
+    );
     res.json(active);
   } catch (err) {
     res.status(500).json({ msg: err.message });

@@ -24,7 +24,14 @@ export const getShowById = async (req, res) => {
 
 export const getShowsByMovie = async (req, res) => {
   try {
-    const shows = await Show.find({ movie: req.params.movieId }).populate('movie').populate('hall')
+    const now = new Date()
+    const shows = await Show.find({
+      movie: req.params.movieId,
+      date: { $gte: now },
+      occurred: false,
+    })
+      .populate('movie')
+      .populate('hall')
     res.json(shows)
   } catch (err) {
     res.status(500).json({ msg: err.message })
@@ -33,9 +40,9 @@ export const getShowsByMovie = async (req, res) => {
 
 export const createShow = async (req, res) => {
   try {
-    const { movie, hall, date, basePrice, format, language } = req.body
+    const { movie, hall, date, basePrice, format, language, occurred } = req.body
     const price = basePrice !== undefined ? basePrice : 28.9
-    const show = await Show.create({ movie, hall, date, basePrice: price, format, language })
+    const show = await Show.create({ movie, hall, date, basePrice: price, format, language, occurred })
     const populated = await Show.findById(show._id).populate('movie').populate('hall')
     res.json(populated)
   } catch (err) {
@@ -45,10 +52,10 @@ export const createShow = async (req, res) => {
 
 export const updateShow = async (req, res) => {
   try {
-    const { movie, hall, date, basePrice, format, language } = req.body
+    const { movie, hall, date, basePrice, format, language, occurred } = req.body
     const show = await Show.findByIdAndUpdate(
       req.params.id,
-      { movie, hall, date, basePrice, format, language },
+      { movie, hall, date, basePrice, format, language, occurred },
       { new: true }
     )
     if (!show) return res.status(404).json({ msg: 'Nie znaleziono seansu' })
