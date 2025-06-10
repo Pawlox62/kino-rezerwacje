@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
-import BackButton from "../components/BackButton";
+// Strona panelu jest widokiem głównym, dlatego bez przycisku wstecz
 
 export default function AdminPanel() {
   const [stats, setStats] = useState([]);
@@ -14,10 +14,7 @@ export default function AdminPanel() {
 
   return (
     <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center">
-        <h2>Statystyki sprzedaży</h2>
-        <BackButton />
-      </div>
+      <h2>Statystyki sprzedaży</h2>
       <table className="table">
         <thead>
           <tr>

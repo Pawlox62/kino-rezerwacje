@@ -62,7 +62,7 @@ export default function Login() {
             </Link>
           </div>
           <div className="mt-3">
-            <BackButton />
+            <BackButton label="Anuluj" />
           </div>
         </Form>
       )}

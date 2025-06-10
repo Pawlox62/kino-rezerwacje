@@ -64,7 +64,7 @@ export default function Register() {
             Zarejestruj
           </button>
           <div className="mt-3">
-            <BackButton />
+            <BackButton label="Anuluj" />
           </div>
         </Form>
       )}
