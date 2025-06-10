@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import api from "../api/axios";
@@ -62,6 +63,9 @@ export default function Register() {
           <button type="submit" className="btn btn-primary">
             Zarejestruj
           </button>
+          <div className="mt-3">
+            <BackButton label="Anuluj" />
+          </div>
         </Form>
       )}
     </Formik>

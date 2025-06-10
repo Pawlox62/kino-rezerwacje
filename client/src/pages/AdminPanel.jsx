@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/axios";
+// Strona panelu jest widokiem głównym, dlatego bez przycisku wstecz
 
 export default function AdminPanel() {
   const [stats, setStats] = useState([]);

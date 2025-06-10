@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import { io } from "socket.io-client";
 import api from "../api/axios";
 import SeatMap from "../components/SeatMap";
@@ -96,7 +97,10 @@ export default function Booking() {
 
   return (
     <div className="container mt-4">
-      <h2>Rezerwacja: {show.movie.title}</h2>
+      <div className="d-flex justify-content-between align-items-center">
+        <h2>Rezerwacja: {show.movie.title}</h2>
+        <BackButton label="Anuluj" />
+      </div>
       <p>
         {new Date(show.date).toLocaleDateString("pl-PL")}{" "}
         {new Date(show.date).toLocaleTimeString("pl-PL", {

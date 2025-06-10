@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import api from "../api/axios";
 
 export default function MovieShows() {
@@ -27,6 +28,7 @@ export default function MovieShows() {
 
   return (
     <div className="container mt-4">
+      <BackButton />
       <div className="row mb-4">
         <div className="col-md-4">
           <img

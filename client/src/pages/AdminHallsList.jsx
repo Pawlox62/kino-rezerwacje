@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/axios";
+import BackButton from "../components/BackButton";
 
 export default function AdminHallsList() {
   const [halls, setHalls] = useState([]);
@@ -19,7 +20,10 @@ export default function AdminHallsList() {
 
   return (
     <div className="container mt-4">
-      <h2>Lista sal</h2>
+      <div className="d-flex justify-content-between align-items-center">
+        <h2>Lista sal</h2>
+        <BackButton />
+      </div>
       <Link to="/admin/halls/new" className="btn btn-primary mb-3">
         Dodaj salę
       </Link>
